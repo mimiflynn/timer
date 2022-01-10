@@ -1,7 +1,14 @@
+Read Me for updated modern version
+=================
+
+Font:
+https://github.com/keshikan/DSEG
+
+
 Read Me For Community Boards
 =================
 
-This is a simple timer that counts UP! 
+This is a simple timer that counts UP!
 
 
 

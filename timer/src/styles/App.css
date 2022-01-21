@@ -9,3 +9,11 @@
   color: #282c34;
   font-family: 'DSEG14-Classic';
 }
+
+.timer.warning {
+  background-color: orange;
+}
+
+.timer.stop {
+  background-color: orangered;
+}

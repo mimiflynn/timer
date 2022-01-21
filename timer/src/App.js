@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import classNames from 'classnames';
 import './styles/App.css';
 
 
@@ -26,7 +27,10 @@ function App() {
   });
 
   return (
-    <div className="timer">
+    <div className={classNames('timer', {
+      'warning': timeElapsed > 90,
+      'stop': timeElapsed > 120
+    })}>
       {formatTime(timeElapsed)}
     </div>
   );

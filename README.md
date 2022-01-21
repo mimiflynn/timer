@@ -1,4 +1,4 @@
-Read Me for updated modern version
+Read Me for React version
 =================
 
 Font:

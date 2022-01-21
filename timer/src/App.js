@@ -10,6 +10,12 @@ function timer(timeElapsed) {
   }
 }
 
+function formatTime(elapsedSeconds) {
+  const minutes = Math.floor(elapsedSeconds / 60);
+  const seconds = elapsedSeconds % 60;
+  return minutes + ":" + ((seconds < 10) ? "0" + seconds.toString() : seconds.toString());
+}
+
 function App() {
   const [timeElapsed, setTime] = useState(timer());
 
@@ -19,11 +25,14 @@ function App() {
     }, 1000);
   });
 
+  const showTimeElapsed = (timeElapsed) => {
+    return formatTime(timeElapsed);
+  }
+
   return (
     <div className="App">
       <header className="App-header">
-        {timeElapsed} <br />
-        seconds has elapsed
+        {showTimeElapsed(timeElapsed)}
       </header>
     </div>
   );

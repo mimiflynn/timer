@@ -1,22 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from 'react';
+import './styles/App.css';
+
+
+function timer(timeElapsed) {
+  if (timeElapsed) {
+    return timeElapsed + 1;
+  } else {
+    return 1;
+  }
+}
 
 function App() {
+  const [timeElapsed, setTime] = useState(timer());
+
+  useEffect(() => {
+    setTimeout(() => {
+      setTime(timer(timeElapsed));
+    }, 1000);
+  });
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        {timeElapsed} <br />
+        seconds has elapsed
       </header>
     </div>
   );

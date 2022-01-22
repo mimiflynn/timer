@@ -18,6 +18,11 @@ function formatTime(elapsedSeconds) {
   return minutes + ':' + ((seconds < 10) ? '0' + seconds.toString() : seconds.toString());
 }
 
+function convertToSeconds(time) {
+  const value = time.split(':');
+  return (Number(value[0]) * 60) + Number(value[1]);
+}
+
 function App() {
   const [timeElapsed, setTime] = useState(0);
   const [timerStarted, setTimerStatus] = useState(false);
@@ -36,42 +41,39 @@ function App() {
   });
 
   function handleLimitUpdate(event) {
-    const value = event.target.value.split(':');
-    const seconds = (value[0] * 60) + value[1];
-    setTimeLimit(seconds);
+    setTimeLimit(convertToSeconds(event.target.value));
   }
 
   function handleWarningUpdate(event) {
-    setTimeWarning(event.target.value);
+    setTimeWarning(convertToSeconds(event.target.value));
   }
 
-  return (
-    <div>
-      <div className={classNames('timer', {
-        'warning': timeElapsed > (timeLimit - timeWarning),
-        'stop': timeElapsed > timeLimit
-      })}>
-        {formatTime(timeElapsed)}
+  function renderControls() {
+    return (
+      <div className="">
+        <button
+          type="button"
+          className={classNames('btn', {
+            'btn-primary': !timerStarted,
+            'btn-danger': timerStarted
+          })}
+          onClick={() => setTimerStatus(!timerStarted)}>
+          {timerStarted ? 'Stop' : 'Start'}
+        </button>
+        <button
+          type="button"
+          className="btn btn-dark"
+          onClick={() => setTime(0)}>Reset</button>
       </div>
-      <div className="container">
-        <div className="row">
-          <div className="col">
-            <button
-              type="button"
-              className="btn btn-primary"
-              onClick={() => setTimerStatus(!timerStarted)}>
-              {timerStarted ? 'Stop' : 'Start'}
-            </button>
-            <button
-              type="button"
-              className="btn btn-dark"
-              onClick={() => setTime(0)}>Reset</button>
-          </div>
-        </div>
+    );
+  }
 
+  function renderSettings() {
+    return (
+      <div className="container my-5">
         <div className="row">
           <div className="col">
-            <div className="input-group mb-3">
+            <div className="input-group">
               <span className="input-group-text"
                 id="time-limit">Limit</span>
               <input
@@ -84,7 +86,7 @@ function App() {
             </div>
           </div>
           <div className="col">
-            <div className="input-group mb-3">
+            <div className="input-group">
               <span className="input-group-text"
                 id="time-limit">Warning</span>
               <input
@@ -98,6 +100,21 @@ function App() {
           </div>
         </div>
       </div>
+    );
+  }
+
+  return (
+    <div className="position-relative">
+      <div className={classNames('timer', {
+        'warning': timeElapsed > (timeLimit - timeWarning),
+        'stop': timeElapsed > timeLimit
+      })}>
+        <div className="time">
+          {formatTime(timeElapsed)}
+        </div>
+        {renderControls()}
+      </div>
+      {renderSettings()}
     </div >
   );
 }

@@ -21,11 +21,10 @@ function formatTime(elapsedSeconds) {
 function App() {
   const [timeElapsed, setTime] = useState(0);
   const [timerStarted, setTimerStatus] = useState(false);
-  let timeLimit = DEFAULT_LIMIT;
-  let timeWarning = DEFAULT_WARNING;
+  const [timeLimit, setTimeLimit] = useState(DEFAULT_LIMIT);
+  const [timeWarning, setTimeWarning] = useState(DEFAULT_WARNING);
 
   useEffect(() => {
-    console.log('timer effect')
     if (timerStarted) {
       const timeout = setTimeout(() => {
         setTime(timer(timeElapsed));
@@ -36,6 +35,16 @@ function App() {
     }
   });
 
+  function handleLimitUpdate(event) {
+    const value = event.target.value.split(':');
+    const seconds = (value[0] * 60) + value[1];
+    setTimeLimit(seconds);
+  }
+
+  function handleWarningUpdate(event) {
+    setTimeWarning(event.target.value);
+  }
+
   return (
     <div>
       <div className={classNames('timer', {
@@ -43,10 +52,51 @@ function App() {
         'stop': timeElapsed > timeLimit
       })}>
         {formatTime(timeElapsed)}
-        <button onClick={() => setTimerStatus(!timerStarted)}>
-          {timerStarted ? 'Stop' : 'Start'}
-        </button>
-        <button onClick={() => setTime(0)}>Reset</button>
+      </div>
+      <div className="container">
+        <div className="row">
+          <div className="col">
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={() => setTimerStatus(!timerStarted)}>
+              {timerStarted ? 'Stop' : 'Start'}
+            </button>
+            <button
+              type="button"
+              className="btn btn-dark"
+              onClick={() => setTime(0)}>Reset</button>
+          </div>
+        </div>
+
+        <div className="row">
+          <div className="col">
+            <div className="input-group mb-3">
+              <span className="input-group-text"
+                id="time-limit">Limit</span>
+              <input
+                type="text"
+                className="form-control"
+                aria-label="Set Time Limit"
+                aria-describedby="time-limit"
+                placeholder={formatTime(timeLimit)}
+                onChange={handleLimitUpdate}></input>
+            </div>
+          </div>
+          <div className="col">
+            <div className="input-group mb-3">
+              <span className="input-group-text"
+                id="time-limit">Warning</span>
+              <input
+                type="text"
+                className="form-control"
+                aria-label="Set Time Warning"
+                aria-describedby="time-warning"
+                placeholder={formatTime(timeWarning)}
+                onChange={handleWarningUpdate}></input>
+            </div>
+          </div>
+        </div>
       </div>
     </div >
   );

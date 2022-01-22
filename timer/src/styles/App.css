@@ -20,9 +20,11 @@
 }
 
 button {
+  display: inline;
   margin: 2rem;
   padding: 1rem 2rem;
   border: none;
   background: #282c34;
   color: white;
+  font-family: 'Courier New', Courier, monospace;
 }

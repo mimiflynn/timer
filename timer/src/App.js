@@ -21,17 +21,21 @@ function App() {
   const [timeElapsed, setTime] = useState(timer());
 
   useEffect(() => {
-    setTimeout(() => {
+    const timeout = setTimeout(() => {
       setTime(timer(timeElapsed));
     }, 1000);
+    return () => clearTimeout(timeout);
   });
 
   return (
-    <div className={classNames('timer', {
-      'warning': timeElapsed > 90,
-      'stop': timeElapsed > 120
-    })}>
-      {formatTime(timeElapsed)}
+    <div>
+      <div className={classNames('timer', {
+        'warning': timeElapsed > 90,
+        'stop': timeElapsed > 120
+      })}>
+        {formatTime(timeElapsed)}
+        <button onClick={() => setTime(timer())}>Reset</button>
+      </div>
     </div>
   );
 }

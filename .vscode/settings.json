@@ -1,0 +1,7 @@
+{
+    "editor.formatOnSave": true,
+    "diffEditor.codeLens": true,
+    "files.trimTrailingWhitespace": true,
+    "html.format.indentInnerHtml": true,
+    "html.format.wrapAttributes": "force-aligned"
+}

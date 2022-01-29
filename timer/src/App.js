@@ -87,8 +87,6 @@ function App() {
           </div>
           <div className="col">
             <div className="input-group">
-              <span className="input-group-text"
-                id="time-limit">Warning</span>
               <input
                 type="text"
                 className="form-control"
@@ -96,6 +94,8 @@ function App() {
                 aria-describedby="time-warning"
                 placeholder={formatTime(timeWarning)}
                 onChange={handleWarningUpdate}></input>
+              <span className="input-group-text"
+                id="time-limit">Warning</span>
             </div>
           </div>
         </div>

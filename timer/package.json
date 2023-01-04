@@ -17,7 +17,7 @@
   "scripts": {
     "clean": "rm -rf ../docs",
     "start": "react-scripts start",
-    "build": "react-scripts build && npm run deploy",
+    "build": "npx browserslist@latest --update-db && react-scripts build && npm run deploy",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "deploy": "npm run clean && mv build ../docs"

@@ -1,7 +1,12 @@
 {
-    "editor.formatOnSave": true,
-    "diffEditor.codeLens": true,
-    "files.trimTrailingWhitespace": true,
-    "html.format.indentInnerHtml": true,
-    "html.format.wrapAttributes": "force-aligned"
+  "files.trimTrailingWhitespace": true,
+  "diffEditor.codeLens": true,
+  "html.format.wrapAttributes": "force-aligned",
+  "html.format.indentInnerHtml": true,
+  "editor.formatOnSave": true,
+  "eslint.format.enable": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "eslint.validate": ["javascript"]
 }

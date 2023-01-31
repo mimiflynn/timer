@@ -15,9 +15,6 @@ concurrency:
   cancel-in-progress: ${{ startsWith(github.ref, 'refs/pull/') }}
 
 jobs:
-  changes:
-    runs-on: ubuntu-latest
-
   timer:
     runs-on: ubuntu-latest
     steps:

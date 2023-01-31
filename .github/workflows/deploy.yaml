@@ -1,8 +1,7 @@
 name: Deploy
 on:
   push:
-    branches:
-      - master
+    branches: [master, gh-actions]
 
 jobs:
   build-deploy:

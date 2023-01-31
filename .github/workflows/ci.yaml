@@ -18,6 +18,6 @@ jobs:
   timer:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
       - name: Test
+      - uses: actions/checkout@v3
         run: npm run test

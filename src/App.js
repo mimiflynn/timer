@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
-import classNames from "classnames";
-import "./styles/App.css";
-import { DEFAULT_LIMIT, DEFAULT_WARNING } from "./constants";
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import classNames from 'classnames';
+import './styles/App.css';
+import { DEFAULT_LIMIT, DEFAULT_WARNING } from './constants';
 
 function timer(timeElapsed) {
   if (timeElapsed) {
@@ -16,17 +16,17 @@ function formatTime(elapsedSeconds) {
   const seconds = elapsedSeconds % 60;
   return (
     minutes +
-    ":" +
-    (seconds < 10 ? "0" + seconds.toString() : seconds.toString())
+    ':' +
+    (seconds < 10 ? '0' + seconds.toString() : seconds.toString())
   );
 }
 
 function convertToSeconds(time) {
-  const value = time.split(":");
+  const value = time.split(':');
   return Number(value[0]) * 60 + Number(value[1]);
 }
 
-function App() {
+const App = () => {
   const [timeElapsed, setTime] = useState(0);
   const [timerStarted, setTimerStatus] = useState(false);
   const [timeLimit, setTimeLimit] = useState(DEFAULT_LIMIT);
@@ -43,26 +43,26 @@ function App() {
     }
   }, [setTime, timeElapsed, timerStarted]);
 
-  function handleLimitUpdate(event) {
+  const handleLimitUpdate = useCallback((event) => {
     setTimeLimit(convertToSeconds(event.target.value));
-  }
+  }, []);
 
-  function handleWarningUpdate(event) {
+  const handleWarningUpdate = useCallback((event) => {
     setTimeWarning(convertToSeconds(event.target.value));
-  }
+  }, []);
 
-  function renderControls() {
+  const renderControls = useMemo(() => {
     return (
       <div className="">
         <button
           type="button"
-          className={classNames("btn", {
-            "btn-primary": !timerStarted,
-            "btn-danger": timerStarted,
+          className={classNames('btn', {
+            'btn-primary': !timerStarted,
+            'btn-danger': timerStarted,
           })}
           onClick={() => setTimerStatus(!timerStarted)}
         >
-          {timerStarted ? "Stop" : "Start"}
+          {timerStarted ? 'Stop' : 'Start'}
         </button>
         <button
           type="button"
@@ -73,9 +73,9 @@ function App() {
         </button>
       </div>
     );
-  }
+  }, [timerStarted]);
 
-  function renderSettings() {
+  const renderSettings = useMemo(() => {
     return (
       <div className="container my-5">
         <div className="row">
@@ -112,22 +112,22 @@ function App() {
         </div>
       </div>
     );
-  }
+  }, [handleLimitUpdate, handleWarningUpdate, timeLimit, timeWarning]);
 
   return (
     <div className="position-relative">
       <div
-        className={classNames("timer", {
+        className={classNames('timer', {
           warning: timeElapsed > timeLimit - timeWarning,
           stop: timeElapsed > timeLimit,
         })}
       >
         <div className="time">{formatTime(timeElapsed)}</div>
-        {renderControls()}
+        {renderControls}
       </div>
-      {renderSettings()}
+      {renderSettings}
     </div>
   );
-}
+};
 
 export default App;

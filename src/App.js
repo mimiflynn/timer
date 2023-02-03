@@ -2,29 +2,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import classNames from 'classnames';
 import './styles/App.css';
 import { DEFAULT_LIMIT, DEFAULT_WARNING } from './constants';
-
-function timer(timeElapsed) {
-  if (timeElapsed) {
-    return timeElapsed + 1;
-  } else {
-    return 1;
-  }
-}
-
-function formatTime(elapsedSeconds) {
-  const minutes = Math.floor(elapsedSeconds / 60);
-  const seconds = elapsedSeconds % 60;
-  return (
-    minutes +
-    ':' +
-    (seconds < 10 ? '0' + seconds.toString() : seconds.toString())
-  );
-}
-
-function convertToSeconds(time) {
-  const value = time.split(':');
-  return Number(value[0]) * 60 + Number(value[1]);
-}
+import { timer, convertToSeconds, formatTime } from './time-utils';
 
 const App = () => {
   const [timeElapsed, setTime] = useState(0);
@@ -53,7 +31,7 @@ const App = () => {
 
   const renderControls = useMemo(() => {
     return (
-      <div className="">
+      <div>
         <button
           type="button"
           className={classNames('btn', {

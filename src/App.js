@@ -2,7 +2,8 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import classNames from 'classnames';
 import './styles/App.css';
 import { DEFAULT_LIMIT, DEFAULT_WARNING } from './constants';
-import { timer, convertToSeconds, formatTime } from './time-utils';
+import { TimeInput } from './components/time-input';
+import { timer, formatTime } from './lib/time-utils';
 
 const App = () => {
   const [timeElapsed, setTime] = useState(0);
@@ -21,12 +22,12 @@ const App = () => {
     }
   }, [setTime, timeElapsed, timerStarted]);
 
-  const handleLimitUpdate = useCallback((event) => {
-    setTimeLimit(convertToSeconds(event.target.value));
+  const handleLimitUpdate = useCallback((value) => {
+    setTimeLimit(value);
   }, []);
 
-  const handleWarningUpdate = useCallback((event) => {
-    setTimeWarning(convertToSeconds(event.target.value));
+  const handleWarningUpdate = useCallback((value) => {
+    setTimeWarning(value);
   }, []);
 
   const renderControls = useMemo(() => {
@@ -62,26 +63,24 @@ const App = () => {
               <span className="input-group-text" id="time-limit">
                 Limit
               </span>
-              <input
-                type="text"
-                className="form-control"
-                aria-label="Set Time Limit"
-                aria-describedby="time-limit"
-                placeholder={formatTime(timeLimit)}
+              <TimeInput
+                ariaLabel="Set Time Limit"
+                ariaDescribedby="time-limit"
+                placeholder={timeLimit}
                 onChange={handleLimitUpdate}
-              ></input>
+                value={timeLimit}
+              ></TimeInput>
             </div>
           </div>
           <div className="col">
             <div className="input-group">
-              <input
-                type="text"
-                className="form-control"
-                aria-label="Set Time Warning"
-                aria-describedby="time-warning"
-                placeholder={formatTime(timeWarning)}
+              <TimeInput
+                ariaLabel="Set Time Limit"
+                ariaDescribedby="time-limit"
+                placeholder={timeWarning}
                 onChange={handleWarningUpdate}
-              ></input>
+                value={timeWarning}
+              ></TimeInput>
               <span className="input-group-text" id="time-limit">
                 Warning
               </span>

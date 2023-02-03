@@ -5,13 +5,13 @@ export function timer(secondsElapsed) {
 
 export function formatTime(elapsedSeconds) {
   if (!elapsedSeconds) return '0:00';
+  if (isNaN(elapsedSeconds)) return elapsedSeconds;
   const minutes = Math.floor(elapsedSeconds / 60);
   const seconds = elapsedSeconds % 60;
-  return (
-    minutes +
-    ':' +
-    (seconds < 10 ? '0' + seconds.toString() : seconds.toString())
-  );
+  const displaySeconds =
+    seconds < 10 ? `0${seconds.toString()}` : seconds.toString();
+
+  return `${minutes}:${displaySeconds}`;
 }
 
 export function convertToSeconds(formattedTime) {

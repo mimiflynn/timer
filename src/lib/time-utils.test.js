@@ -7,7 +7,9 @@ it('timer increments time', () => {
 
 it('formats time', () => {
   expect(formatTime()).toBe('0:00');
+  expect(formatTime(15)).toBe('0:15');
   expect(formatTime(90)).toBe('1:30');
+  expect(formatTime('1:30')).toBe('1:30');
 });
 
 it('converts minutes to seconds', () => {

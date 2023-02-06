@@ -1,0 +1,26 @@
+import { fireEvent, render, screen } from '@testing-library/react';
+
+import { TimeInput } from './time-input';
+
+const setup = () => {
+  const utils = render(
+    <TimeInput
+      ariaLabel="time"
+      ariaDescribedby="time-limit"
+      placeholder="0:30"
+      onChange={(event) => console.log('change', event)}
+      value={90}
+    ></TimeInput>
+  );
+  const input = screen.getByLabelText('time');
+  return {
+    input,
+    ...utils,
+  };
+};
+
+test('Input should set display value', () => {
+  const { input } = setup();
+  fireEvent.change(input, { target: { value: '23' } });
+  expect(input.value).toBe('0:23');
+});

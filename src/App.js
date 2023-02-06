@@ -60,15 +60,12 @@ const App = () => {
         <div className="row">
           <div className="col">
             <div className="input-group">
-              <span className="input-group-text" id="time-limit">
-                Limit
-              </span>
+              <label className="input-group-text">Limit</label>
               <TimeInput
                 ariaLabel="Set Time Limit"
                 ariaDescribedby="time-limit"
                 placeholder={timeLimit}
                 onChange={handleLimitUpdate}
-                value={timeLimit}
               ></TimeInput>
             </div>
           </div>
@@ -79,11 +76,8 @@ const App = () => {
                 ariaDescribedby="time-limit"
                 placeholder={timeWarning}
                 onChange={handleWarningUpdate}
-                value={timeWarning}
               ></TimeInput>
-              <span className="input-group-text" id="time-limit">
-                Warning
-              </span>
+              <label className="input-group-text">Warning</label>
             </div>
           </div>
         </div>

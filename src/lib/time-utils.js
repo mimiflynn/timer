@@ -14,6 +14,24 @@ export function formatTime(elapsedSeconds) {
   return `${minutes}:${displaySeconds}`;
 }
 
+export function formatInputTime(inputTime) {
+  if (!inputTime) return '0:00';
+
+  const removeNonnumeric = inputTime.replace(/[^0-9.]/g, '');
+  const numberString = removeNonnumeric.replace(/\b0+/g, '');
+  const timeArr = String(numberString).split('');
+
+  if (timeArr.length === 1) {
+    return `0:0${timeArr[0]}`;
+  }
+  if (timeArr.length === 2) {
+    return `0:${timeArr.join('')}`;
+  }
+
+  timeArr.splice(timeArr.length - 2, 0, ':');
+  return timeArr.join('');
+}
+
 export function convertToSeconds(formattedTime) {
   if (!formattedTime) return 0;
   if (!isNaN(formattedTime)) return formattedTime;

@@ -17,7 +17,7 @@ export function formatTime(elapsedSeconds) {
 export function formatInputTime(inputTime) {
   if (!inputTime) return '0:00';
 
-  const removeNonnumeric = inputTime.replace(/[^0-9.]/g, '');
+  const removeNonnumeric = inputTime.replace(/\D/g, '');
   const numberString = removeNonnumeric.replace(/\b0+/g, '');
 
   if (numberString.length === 1) {

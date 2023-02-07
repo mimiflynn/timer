@@ -23,4 +23,10 @@ test('Input should set display value', () => {
   const { input } = setup();
   fireEvent.change(input, { target: { value: '23' } });
   expect(input.value).toBe('0:23');
+
+  fireEvent.change(input, { target: { value: 'y15efg' } });
+  expect(input.value).toBe('0:15');
+
+  fireEvent.change(input, { target: { value: '90' } });
+  expect(input.value).toBe('1:30');
 });

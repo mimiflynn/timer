@@ -1,15 +1,15 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import classNames from 'classnames';
 import './styles/App.css';
-import { DEFAULT_LIMIT, DEFAULT_WARNING } from './constants';
+import { DEFAULT_LIMIT_SEC, DEFAULT_WARNING_SEC } from './constants';
 import { TimeInput } from './components/time-input';
 import { timer, formatTime } from './lib/time-utils';
 
 const App = () => {
   const [timeElapsed, setTime] = useState(0);
   const [timerStarted, setTimerStatus] = useState(false);
-  const [timeLimit, setTimeLimit] = useState(DEFAULT_LIMIT);
-  const [timeWarning, setTimeWarning] = useState(DEFAULT_WARNING);
+  const [timeLimit, setTimeLimit] = useState(DEFAULT_LIMIT_SEC);
+  const [timeWarning, setTimeWarning] = useState(DEFAULT_WARNING_SEC);
 
   useEffect(() => {
     if (timerStarted) {
@@ -64,7 +64,7 @@ const App = () => {
               <TimeInput
                 ariaLabel="Set Time Limit"
                 ariaDescribedby="time-limit"
-                placeholder={timeLimit}
+                placeholderSec={timeLimit}
                 onChange={handleLimitUpdate}
               ></TimeInput>
             </div>
@@ -74,7 +74,7 @@ const App = () => {
               <TimeInput
                 ariaLabel="Set Time Limit"
                 ariaDescribedby="time-limit"
-                placeholder={timeWarning}
+                placeholderSec={timeWarning}
                 onChange={handleWarningUpdate}
               ></TimeInput>
               <label className="input-group-text">Warning</label>

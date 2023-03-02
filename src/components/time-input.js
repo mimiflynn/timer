@@ -8,10 +8,10 @@ import {
 export const TimeInput = ({
   ariaLabel,
   ariaDescribedby,
-  placeholder,
+  placeholderSec,
   onChange,
 }) => {
-  const [value, setValue] = useState(formatTime(placeholder));
+  const [value, setValue] = useState(formatTime(placeholderSec));
   const handleChange = useCallback(
     ({ target }) => {
       onChange(convertToSeconds(target.value));
@@ -27,7 +27,7 @@ export const TimeInput = ({
       className="form-control"
       aria-label={ariaLabel}
       aria-describedby={ariaDescribedby}
-      placeholder={formatTime(placeholder)}
+      placeholder={formatTime(placeholderSec)}
       onChange={handleChange}
       value={value}
     ></input>

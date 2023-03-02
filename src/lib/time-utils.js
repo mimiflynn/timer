@@ -24,9 +24,10 @@ export function formatInputTime(inputTime) {
     return `0:0${numberString}`;
   }
   if (numberString.length === 2) {
-    return formatTime(numberString);
+    return `0:${numberString}`;
   }
 
+  // add colon
   const timeArr = String(numberString).split('');
   timeArr.splice(timeArr.length - 2, 0, ':');
   return timeArr.join('');

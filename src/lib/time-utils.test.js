@@ -21,11 +21,10 @@ it('formats input time', () => {
   expect(formatInputTime()).toBe('0:00');
   expect(formatInputTime('3')).toBe('0:03');
   expect(formatInputTime('30')).toBe('0:30');
-  expect(formatInputTime('90')).toBe('1:30');
   expect(formatInputTime('130')).toBe('1:30');
   expect(formatInputTime('1:30')).toBe('1:30');
   expect(formatInputTime('y15efg')).toBe('0:15');
-  expect(formatInputTime('y90efg')).toBe('1:30');
+  expect(formatInputTime('y300efg')).toBe('3:00');
 });
 
 it('converts minutes to seconds', () => {

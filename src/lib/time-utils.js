@@ -5,6 +5,7 @@ export function timer(secondsElapsed) {
 
 export function formatTime(elapsedSeconds) {
   if (!elapsedSeconds) return '0:00';
+  if (elapsedSeconds.length > 2) return elapsedSeconds;
   if (isNaN(elapsedSeconds)) return elapsedSeconds;
   const minutes = Math.floor(elapsedSeconds / 60);
   const seconds = elapsedSeconds % 60;

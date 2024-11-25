@@ -14,7 +14,9 @@ it('formats time', () => {
   expect(formatTime()).toBe('0:00');
   expect(formatTime(15)).toBe('0:15');
   expect(formatTime(90)).toBe('1:30');
+  expect(formatTime(180)).toBe('3:00');
   expect(formatTime('1:30')).toBe('1:30');
+  expect(formatTime('8:00')).toBe('8:00');
 });
 
 it('formats input time', () => {

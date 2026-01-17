@@ -33,30 +33,13 @@ export function formatTime(elapsedSeconds) {
 
 /**
  * Formats user input into MM:SS time format
- * Plain numbers are treated as minutes (e.g., "5" = "5:00")
- * Colons can be used for MM:SS format (e.g., "5:30" = "5:30")
+ * Last 2 digits are treated as seconds, remaining digits as minutes
+ * e.g., "130" = "1:30", "800" = "8:00", "90" = "1:30"
  * @param {string} inputTime - The raw user input
  * @returns {string} Formatted time as MM:SS
  */
 export function formatInputTime(inputTime) {
   if (!inputTime) return '0:00';
-
-  // If input already contains a colon, treat as MM:SS format
-  if (inputTime.includes(':')) {
-    const parts = inputTime.split(':');
-    const minutes = parts[0].replace(/\D/g, '') || '0';
-    const seconds = parts[1] ? parts[1].replace(/\D/g, '') : '0';
-
-    const mins = parseInt(minutes, 10);
-    const secs = parseInt(seconds, 10);
-
-    // Clamp seconds to 0-59
-    const displaySeconds = Math.min(secs, 59);
-    const displaySecondsPadded =
-      displaySeconds < 10 ? `0${displaySeconds}` : `${displaySeconds}`;
-
-    return `${mins}:${displaySecondsPadded}`;
-  }
 
   // Remove all non-numeric characters
   const numericOnly = inputTime.replace(/\D/g, '');
@@ -67,9 +50,39 @@ export function formatInputTime(inputTime) {
     return '0:00';
   }
 
-  // Treat plain numbers as minutes (not seconds)
-  const minutes = parseInt(numberString, 10);
-  return `${minutes}:00`;
+  if (numberString.length === 1) {
+    // Single digit: treat as seconds
+    return `0:0${numberString}`;
+  }
+
+  if (numberString.length === 2) {
+    // Two digits: treat as seconds, convert if >= 60
+    const seconds = parseInt(numberString, 10);
+    if (seconds >= 60) {
+      const minutes = Math.floor(seconds / 60);
+      const remainingSeconds = seconds % 60;
+      const displaySeconds =
+        remainingSeconds < 10 ? `0${remainingSeconds}` : `${remainingSeconds}`;
+      return `${minutes}:${displaySeconds}`;
+    }
+    return `0:${numberString}`;
+  }
+
+  // 3+ digits: last 2 are seconds, rest are minutes
+  const secondsPart = numberString.slice(-2);
+  const minutesPart = numberString.slice(0, -2);
+
+  let minutes = parseInt(minutesPart, 10);
+  let seconds = parseInt(secondsPart, 10);
+
+  // If seconds >= 60, convert to minutes
+  if (seconds >= 60) {
+    minutes += Math.floor(seconds / 60);
+    seconds = seconds % 60;
+  }
+
+  const displaySeconds = seconds < 10 ? `0${seconds}` : `${seconds}`;
+  return `${minutes}:${displaySeconds}`;
 }
 
 /**

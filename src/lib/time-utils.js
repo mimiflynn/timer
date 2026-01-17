@@ -33,39 +33,43 @@ export function formatTime(elapsedSeconds) {
 
 /**
  * Formats user input into MM:SS time format
- * Removes non-numeric characters and adds colon separator
- * Handles conversion when seconds >= 60
+ * Plain numbers are treated as minutes (e.g., "5" = "5:00")
+ * Colons can be used for MM:SS format (e.g., "5:30" = "5:30")
  * @param {string} inputTime - The raw user input
  * @returns {string} Formatted time as MM:SS
  */
 export function formatInputTime(inputTime) {
   if (!inputTime) return '0:00';
 
+  // If input already contains a colon, treat as MM:SS format
+  if (inputTime.includes(':')) {
+    const parts = inputTime.split(':');
+    const minutes = parts[0].replace(/\D/g, '') || '0';
+    const seconds = parts[1] ? parts[1].replace(/\D/g, '') : '0';
+
+    const mins = parseInt(minutes, 10);
+    const secs = parseInt(seconds, 10);
+
+    // Clamp seconds to 0-59
+    const displaySeconds = Math.min(secs, 59);
+    const displaySecondsPadded =
+      displaySeconds < 10 ? `0${displaySeconds}` : `${displaySeconds}`;
+
+    return `${mins}:${displaySecondsPadded}`;
+  }
+
   // Remove all non-numeric characters
   const numericOnly = inputTime.replace(/\D/g, '');
   // Remove leading zeros
   const numberString = numericOnly.replace(/^0+/, '') || '0';
 
-  if (numberString.length === 1) {
-    return `0:0${numberString}`;
-  }
-  if (numberString.length === 2) {
-    // Check if this represents seconds >= 60, convert to minutes
-    const seconds = parseInt(numberString, 10);
-    if (seconds >= 60) {
-      const minutes = Math.floor(seconds / 60);
-      const remainingSeconds = seconds % 60;
-      const displaySeconds =
-        remainingSeconds < 10 ? `0${remainingSeconds}` : `${remainingSeconds}`;
-      return `${minutes}:${displaySeconds}`;
-    }
-    return `0:${numberString}`;
+  if (numberString.length === 0) {
+    return '0:00';
   }
 
-  // Insert colon before the last 2 digits (seconds)
-  const timeArray = numberString.split('');
-  timeArray.splice(timeArray.length - 2, 0, ':');
-  return timeArray.join('');
+  // Treat plain numbers as minutes (not seconds)
+  const minutes = parseInt(numberString, 10);
+  return `${minutes}:00`;
 }
 
 /**

@@ -10,7 +10,7 @@ const setup = () => {
       placeholder="0:30"
       onChange={(event) => console.log('change', event)}
       value={90}
-    ></TimeInput>
+    ></TimeInput>,
   );
   const input = screen.getByLabelText('time');
   return {
@@ -22,17 +22,17 @@ const setup = () => {
 test('Input should set display value', () => {
   const { input } = setup();
   fireEvent.change(input, { target: { value: '23' } });
-  expect(input.value).toBe('0:23');
+  expect(input.value).toBe('23:00');
 
   fireEvent.change(input, { target: { value: 'y15efg' } });
-  expect(input.value).toBe('0:15');
+  expect(input.value).toBe('15:00');
 
   fireEvent.change(input, { target: { value: '8' } });
   fireEvent.change(input, { target: { value: '80' } });
-  fireEvent.change(input, { target: { value: '800' } });
+  fireEvent.change(input, { target: { value: '8:00' } });
   expect(input.value).toBe('8:00');
 
   fireEvent.change(input, { target: { value: '9' } });
-  fireEvent.change(input, { target: { value: '90' } });
-  expect(input.value).toBe('1:30');
+  fireEvent.change(input, { target: { value: '9:30' } });
+  expect(input.value).toBe('9:30');
 });

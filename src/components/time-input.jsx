@@ -14,10 +14,11 @@ export const TimeInput = ({
   const [value, setValue] = useState(formatTime(placeholderSec));
   const handleChange = useCallback(
     ({ target }) => {
-      setValue(formatInputTime(formatTime(target.value)));
-      onChange(convertToSeconds(target.value));
+      const formattedValue = formatInputTime(target.value);
+      setValue(formattedValue);
+      onChange(convertToSeconds(formattedValue));
     },
-    [onChange]
+    [onChange],
   );
 
   return (

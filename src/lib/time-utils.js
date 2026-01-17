@@ -34,6 +34,7 @@ export function formatTime(elapsedSeconds) {
 /**
  * Formats user input into MM:SS time format
  * Removes non-numeric characters and adds colon separator
+ * Handles conversion when seconds >= 60
  * @param {string} inputTime - The raw user input
  * @returns {string} Formatted time as MM:SS
  */
@@ -49,6 +50,15 @@ export function formatInputTime(inputTime) {
     return `0:0${numberString}`;
   }
   if (numberString.length === 2) {
+    // Check if this represents seconds >= 60, convert to minutes
+    const seconds = parseInt(numberString, 10);
+    if (seconds >= 60) {
+      const minutes = Math.floor(seconds / 60);
+      const remainingSeconds = seconds % 60;
+      const displaySeconds =
+        remainingSeconds < 10 ? `0${remainingSeconds}` : `${remainingSeconds}`;
+      return `${minutes}:${displaySeconds}`;
+    }
     return `0:${numberString}`;
   }
 

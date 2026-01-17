@@ -12,13 +12,26 @@ export const TimeInput = ({
   onChange,
 }) => {
   const [value, setValue] = useState(formatTime(placeholderSec));
-  const handleChange = useCallback(
-    ({ target }) => {
-      setValue(formatInputTime(formatTime(target.value)));
-      onChange(convertToSeconds(target.value));
-    },
-    [onChange]
-  );
+  const [isEditing, setIsEditing] = useState(false);
+
+  const handleChange = useCallback(({ target }) => {
+    // While editing, just store the raw value (digits only)
+    setValue(target.value);
+  }, []);
+
+  const handleFocus = useCallback(() => {
+    setIsEditing(true);
+    // Clear the formatted value to let user type fresh
+    setValue('');
+  }, []);
+
+  const handleBlur = useCallback(() => {
+    setIsEditing(false);
+    // Format the value when done editing
+    const formattedValue = formatInputTime(value);
+    setValue(formattedValue);
+    onChange(convertToSeconds(formattedValue));
+  }, [value, onChange]);
 
   return (
     <input
@@ -29,6 +42,8 @@ export const TimeInput = ({
       aria-describedby={ariaDescribedby}
       placeholder={formatTime(placeholderSec)}
       onChange={handleChange}
+      onFocus={handleFocus}
+      onBlur={handleBlur}
       value={value}
     ></input>
   );

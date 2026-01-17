@@ -14,8 +14,8 @@ export const TimeInput = ({
   const [value, setValue] = useState(formatTime(placeholderSec));
   const handleChange = useCallback(
     ({ target }) => {
+      setValue(formatInputTime(formatTime(target.value)));
       onChange(convertToSeconds(target.value));
-      setValue(formatInputTime(target.value));
     },
     [onChange]
   );
